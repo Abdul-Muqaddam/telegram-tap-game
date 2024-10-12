@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Briller';
+    src: local('Briller Black'), local('Briller-Black'),
+        url('Briller-Black.woff2') format('woff2'),
+        url('Briller-Black.woff') format('woff'),
+        url('Briller-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+  }

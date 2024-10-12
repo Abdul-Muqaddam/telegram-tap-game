@@ -1,0 +1,64 @@
+@font-face {
+    font-family: 'Briller';
+    src: local('Briller Black'), local('Briller-Black'),
+        url('/src/assets/Briller-Black/Briller-Black.woff2') format('woff2'),
+        url('/src//assets/Briller-Black/Briller-Black.woff') format('woff'),
+        url('/src/assets/Briller-Black/Briller-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+.briller {
+    font-family: "Briller";
+}
+
+.letter {
+    display: inline-block;
+    opacity: 0;
+}
+
+.letter:nth-child(1) {
+    animation: fallIn 0.5s ease-out forwards 0.1s;
+}
+
+.letter:nth-child(2) {
+    animation: fallIn 0.5s ease-out forwards 0.2s;
+}
+
+.letter:nth-child(3) {
+    animation: fallIn 0.5s ease-out forwards 0.3s;
+}
+
+.letter:nth-child(4) {
+    animation: fallIn 0.5s ease-out forwards 0.4s;
+}
+
+.letter:nth-child(5) {
+    animation: fallIn 0.5s ease-out forwards 0.5s;
+}
+
+.letter:nth-child(6) {
+    animation: fallIn 0.5s ease-out forwards 0.6s;
+}
+
+.letter:nth-child(7) {
+    animation: fallIn 0.5s ease-out forwards 0.7s;
+}
+
+.letter:nth-child(8) {
+    animation: fallIn 0.5s ease-out forwards 0.8s;
+}
+
+.letter:nth-child(9) {
+    animation: fallIn 0.5s ease-out forwards 0.9s;
+}
+
+.letter:nth-child(10) {
+    animation: fallIn 0.5s ease-out forwards 1s;
+}
+
+.custom-drop-shadow{
+    filter: drop-shadow(5px 5px 15px #88c0ff) drop-shadow(-5px -5px 15px #88c0ff);
+}
+
+
