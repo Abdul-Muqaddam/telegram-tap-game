@@ -111,9 +111,7 @@ const Hero = () => {
                             <button className="w-[20vw] flex items-center justify-center flex-col" onClick={handleQuest}>
                                 <img src="/src/assets/hero/todo.png" alt="" className="h-[4.5vh]" />
                                 <div className="text-[#B2BECE]">Quests</div>
-                            </button>
-                        
-                    
+                            </button>   
                 </footer>
             </div>
         </>
