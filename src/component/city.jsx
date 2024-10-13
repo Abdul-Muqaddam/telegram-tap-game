@@ -105,7 +105,7 @@ const City = () => {
                             <div className="text-[#B2BECE]">City</div>
                         </button>
                         
-                            <button className={`w-[20vw] flex items-center justify-center flex-col` } onclick={handleMinning}>
+                            <button className={`w-[20vw] flex items-center justify-center flex-col` } onClick={handleMinning}>
                                 <img src="/src/assets/hero/elon_musk_half_body.png" alt="" className={`h-[7.5vh] left-[11.2rem] border-4 border-[#305084] bg-[#2F447A] rounded-[3rem] px-1 absolute bottom-[2rem]  `} onClick={handleMinning} />
                                 <div className={`text-[#B2BECE] mt-10 `} onClick={handleMinning}>Mining</div>
                             </button>

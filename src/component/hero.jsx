@@ -1,8 +1,12 @@
 import React , { useState, useEffect }from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Hero = () => {
-    const [score,setScore]=useState(1113467)
+    const [score,setScore]=useState(()=>{
+        let saveScore= window.localStorage.getItem("score")
+        return saveScore ? parseInt(saveScore,10) : 1
+    })
     const [tapme,setTapme]=useState("Tap Me")
     const [enlarge,setEnlarge]=useState(false)
     const [highLight,setHightLight]= useState(false)
@@ -10,7 +14,8 @@ const Hero = () => {
     const navigate=useNavigate()    
     useEffect(()=>{
         const value = setInterval(() => {
-            setScore((prevalue)=>(prevalue +1)) 
+            setScore((prevalue)=>(prevalue +1))
+            
          }, 1000);
         return ()=>clearInterval(value)
     },[])
@@ -20,6 +25,9 @@ const Hero = () => {
             setHightLight(true)
         }
     },[location.pathname])
+    useEffect(()=>{
+        window.localStorage.setItem("score",score)
+    },[score])
       
     const handleTapMe=()=>{
         setTapme("")
@@ -49,6 +57,8 @@ const Hero = () => {
     const  handleQuest=()=>{
         navigate("/quests")
     }
+
+
     return (
         <>
             <div className="bg-custom-picture-hero absolute h-[100vh] w-[100vw] bg-cover">
@@ -99,7 +109,7 @@ const Hero = () => {
                             <div className="text-[#B2BECE]">City</div>
                         </button>
                         
-                            <button className={`w-[20vw] flex items-center justify-center flex-col ${highLight?"bg-gradient-to-b from-[#f5b026a9] to-[#f5b02600]":""}` } onclick={handleMinning}>
+                            <button className={`w-[20vw] flex items-center justify-center flex-col ${highLight?"bg-gradient-to-b from-[#f5b026a9] to-[#f5b02600]":""}` } onClick={handleMinning}>
                                 <img src="/src/assets/hero/elon_musk_half_body.png" alt="" className={`h-[7.5vh] left-[11.2rem] border-4 border-[#305084] bg-[#2F447A] rounded-[3rem] px-1 absolute bottom-[2rem] ${highLight?"border-[#F5AF26] bg-[#AB873E]":""} `} />
                                 <div className={`text-[#B2BECE] mt-10 ${highLight?"text-[white]":""}`}>Mining</div>
                             </button>
