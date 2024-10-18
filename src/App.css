@@ -58,7 +58,10 @@
 }
 
 .custom-drop-shadow{
-    filter: drop-shadow(5px 5px 15px #88c0ff) drop-shadow(-5px -5px 15px #88c0ff);
+    filter: drop-shadow(5px 5px 15px #88c0ff) drop-shadow(-5px -5px 15px #E68186);
+}
+.text-shadow-black{
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 1); 
 }
 
 
