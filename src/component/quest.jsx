@@ -26,7 +26,7 @@ const Quests = () => {
     return (
         
         <>
-            <div className="bg-custom-quest-picture bg-current bg-center w-[100vw] h-[200vh]">
+            <div className="bg-custom-improve-picture bg-no-repeat bg-cover bg-center w-[100vw] h-[190vh]">
                 <div className="w-[100vw] flex justify-center">
 
                     <div className="h-[10vh] w-[90vw] flex items-center justify-between ">
@@ -299,7 +299,7 @@ const Quests = () => {
                     
                         <button className={`w-[20vw] flex items-center justify-center flex-col bg-gradient-to-b  from-[#1E1E1E] to-[#444343] rounded-[3rem] animate-upDown animation-150ms ${highLight?" transition-all duration-300 ease-in-out":""}` } onClick={handleMinning}>
                             <img src="/src/assets/hero/mining.png" alt="" className={`h-[4.5vh] rounded-[3rem] px-1 absolute bottom-[2rem] ${highLight?" transition-all duration-300 ease-in-out":""} transition-all duration-300 ease-in-out`} />
-                            <div className={`text-[#B2BECE]  mt-10 ${highLight?"text-[white]":""} text-shadow-black`}>Mining</div>
+                            <div className={`text-[#B2BECE]  mt-10  text-shadow-black`}>Mining</div>
                         </button>
                         <button  className={` w-[20vw] flex items-center animate-upDown justify-center flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animation-delay-300ms`} onClick={handleFriends}>   
                             <img src="/src/assets/hero/invite.png" alt="" className="h-[4.5vh]" />
@@ -308,7 +308,7 @@ const Quests = () => {
 
                         <button className="w-[20vw] flex items-center justify-center  flex-col  rounded-[3rem] " onClick={handleQuest}>
                             <img src="/src/assets/hero/todo (2).png " alt="" className="h-[7.5vh] bg-[#55F9E9] animate-shadowFadeInOut rounded-[3rem]" />
-                            <div className="text-[#B2BECE] text-shadow-black">Quests</div>
+                            <div className={`text-[#B2BECE] text-shadow-black ${highLight?"text-white":""}`}>Quests</div>
                         </button>   
             </footer>
                 </div>

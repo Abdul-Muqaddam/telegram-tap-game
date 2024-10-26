@@ -7,7 +7,7 @@ const Hero = () => {
         let saveScore= window.localStorage.getItem("score")
         return saveScore ? parseInt(saveScore,10) : 1
     })
-    const [tapme,setTapme]=useState("Tap Me")
+    // const [tapme,setTapme]=useState("Tap Me")
     const [enlarge,setEnlarge]=useState(false)
     const [highLight,setHightLight]= useState(false)
     const location=useLocation()
@@ -90,12 +90,12 @@ const Hero = () => {
                     </div>
                 </div>
                 <div className="">
-                    <img src="/src/assets/hero/coin.png" alt="" className="h-[7.9vh] absolute left-[6rem] top-[7rem] animate-upDown" />
-                    <div className="text-white font-semibold text-[3rem] absolute left-[11.5rem] top-[7rem]">{score}</div>
+                    <img src="/src/assets/hero/coin.png" alt="" className="h-[7.9vh] absolute left-[5rem] top-[11rem] animate-upDown" />
+                    <div className="text-white font-semibold text-[3rem] absolute left-[10.5rem] top-[11rem] Orbitron">{score}</div>
                 </div>
                 <div >
                     <img  src="/src/assets/hero/elon_musk_full_body.png" alt="" className={`h-[47vh] absolute top-[18rem] transition-all duration-100 ease-in-out ${enlarge?"scale-110 custom-drop-shadow":""}`} onClick={()=>{handleTapMe(); handleIsEnlarge(); handleClickScore();}}/>
-                    <div className="text-white absolute left-[8rem] top-[30rem] font-bold text-[3rem] custome-text-shadow animate-upDown" onClick={handleTapMe} >{tapme}</div>
+                    <div className="text-white absolute left-[8rem] top-[30rem] font-bold text-[3rem] custome-text-shadow animate-upDown" onClick={handleTapMe} >{}</div>
                 </div>
                 <footer className="  border-[#5074d2] h-[9vh] mt-[47rem] flex ">
                     

@@ -9,9 +9,10 @@ export default {
       backgroundImage:{
         "custome-picture-loading":"URL('src/assets/loading/starting_background.webp')",
         "custom-picture-hero":"URL('src/assets/hero/background.png')",
-        "custom-city-picture":"URL('src/assets/city/bg-city.webp')",
+        "custom-city-picture":"URL('src/assets/city/drop game/bg-city.png')",
         "custom-invite-picture":"URL('src/assets/referal/bg-invite.webp')",
-        "custom-quest-picture":"URL('src/assets/Quests/background.webp')"
+        "custom-quest-picture":"URL('src/assets/Quests/background.webp')",
+        "custom-improve-picture":"URL('src/assets/improve/bg-improve.webp')"
       },
       boxShadow:{
         "blue-button":"5px 5px 40px 10px #0000CD,-5px -5px 40px 10px #0000CD",

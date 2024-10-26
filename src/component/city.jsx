@@ -1,125 +1,171 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const City = () => {
-    const [highLight,setHightLight]= useState(false)
+    const [highLight, setHightLight] = useState(false);
+    const [time, setTime] = useState(30);
+    const [fallingStars, setFallingStars] = useState([]);
+    const [fallingAsteroids, setFallingAsteroids] = useState([]);
+    const [score ,setScore]=useState(0)
+    const [gameOver,setGameOver]=useState(false)
+
+
+
     useEffect(()=>{
-        if(location.pathname=="/city"){
-            setHightLight(true)
+        if(!gameOver){
+
+            const spawStar=setInterval(()=>{
+                const star={
+                    id:Date.now(),
+                    xPosition:Math.random() * (window.innerWidth-100),
+                    yPosition:0,
+                    speed:Math.random() * 20 + 5
+                }
+                setFallingStars(prev=>[...prev,star]) 
+            },300)
+            return () => clearInterval(spawStar)
         }
-    },[location.pathname])
-    const navigate=useNavigate()
-    const handleImprove=()=>{
-        navigate("/improve")
+    },[gameOver])
+
+    useEffect(()=>{
+        if(!gameOver){
+
+            const spawAsteriod= setInterval(()=>{
+                const asteriod={
+                    id:Date.now()+1,
+                    xPosition:Math.random() * (window.innerWidth-100),
+                    yPosition:0,
+                    speed:Math.random()*20+5   
+                }
+                setFallingAsteroids(prev=> [...prev,asteriod])
+            },2000)
+            return () => clearInterval(spawAsteriod)
+        }
+    },[gameOver])
+        
+    useEffect(() => {
+        const countDown = setInterval(() => {
+            setTime(prev => {
+                if (prev > 0) {
+                    return prev - 1
+                }
+                else {
+                    clearInterval(countDown);
+                    setGameOver(true)
+                    return 0;
+                }
+            })
+        }, 1000)
+    }, [])
+
+    useEffect(()=>{
+        if(!gameOver){
+            const updateYPosition=setInterval(()=>{
+                setFallingStars(prev=>
+                    prev.map(star=>({
+                        ...star,
+                        yPosition:star.yPosition+star.speed,
+                    }))
+                )
+                setFallingAsteroids(prev=>
+                    prev.map(asteriod=>(
+                        {
+                            ...asteriod,
+                            yPosition:asteriod.yPosition+asteriod.speed,
+                        }
+                    ))
+                    
+                )
+                
+            },50)
+            return ()=> clearInterval(updateYPosition)
+        }
+    },[gameOver])
+
+    useEffect(()=>{
+        const cleanupinterval=setInterval(()=>{
+            setFallingStars(prev=>prev.filter(star=>(star.yPosition<window.innerHeight)))
+            setFallingAsteroids(prev=>prev.filter(asteriod=>(asteriod.yPosition<window.innerHeight)))
+        },100)
+        return ()=>clearInterval(cleanupinterval)
+    },[])
+
+    useEffect(() => {
+        if (location.pathname === "/city") {
+            setHightLight(true);
+        }
+    }, [location.pathname]);
+
+    const handleStarScore=(starId)=>{
+        setScore(score+1)
+        setFallingStars(fallingStars.filter(star=>(star.id!==starId)))
     }
-    const handleCity=()=>{
-        navigate("/city")
+    const handleAsteriodScore=(asteroidId)=>{
+        setScore(0)
+        setFallingAsteroids(fallingAsteroids.filter(asteroid=>(asteroid.id!==asteroidId)))
     }
-    const handleMinning=()=>{
+    const navigate = useNavigate();
+
+    const handleNavigate=()=>{
         navigate("/hero")
     }
-    const handleFriends=()=>{
-        navigate("/friends")
-    }
-    const  handleQuest=()=>{
-        navigate("/quests")
-    }
+
     return (
-        <>
-            <div className="bg-custom-city-picture bg-cover h-[100vh] w-[100vw]">
-                <div className="flex justify-center h-20">
-                    <div className="h-[10vh] w-[90vw] flex items-center justify-between ">
-                        <div className="flex items-center justify-between w-[45vw]">
-                            <div className=" ">
-                                <div className="relative">
-                                    <img src="/src/assets/hero/logo.png" alt="" className="h-[7vh]  z-[0] mt-10 rounded-t-[0.6rem]" />
-                                    <div className="text-[white] font-bold text-[1.7rem] absolute bottom-[-10px] rounded-t-[2rem] left-[-2px]  ">Lv.1</div>
-                                </div>
-                                <div className="bg-[#424454] w-[18.116vw] h-[1rem] rounded-br-[0.6rem] rounded-bl-[0.6rem]">
-                                    <div className="w-[15.7vw] h-[1rem] text-[0.7rem]  rounded-bl-[0.6rem] bg-gradient-to-r from-[#FFCA54] to-[#fddb92] pl-2">79%</div>
+        <div className="bg-custom-city-picture bg-cover h-[100vh] w-[100vw]">
+            <div className="border-[2px] border-[white] h-[7vh] absolute rounded-[3rem] font-bold w-[25vw] flex items-center justify-center text-[1.3rem] top-[1rem] left-[1rem] text-[white] Orbitron">
+                00:<div>{time}</div>
+            </div>
+            <div className="text-white absolute right-5 top-3 Orbitron text-[3rem]">
+                {score}
+            </div>
+            <div className="game-area">
+                <div className={`h-[100vh] w-[100vw] bg-transparent  z-10 ${time==0?"absolute":"hidden"}`}></div>
+                <div>
+                    <div className={`h-[50vh] w-[80vw] backdrop-blur-sm absolute left-[2.8rem] top-[12rem] z-[11] rounded-[1rem] ${time==0?"absolute":"hidden"}`}>
+                        <div className=" Orbitron flex flex-col justify-evenly items-center h-[50vh] w-[80vw]">
+                            <div className="text-white font-bold text-[2.2rem]">
+                            Your are on Fire
+                            </div>
+                            <div className="flex items-center justify-center">
+                                <img src="src/assets/hero/coin.png" alt="" className="h-[8vh] animate-upDown" />
+                                <div className="text-white text-[3rem] font-bold">
+                                    {score}
                                 </div>
                             </div>
-                            <div className="mt-[1.3rem]">
-                                <div className="text-[#d2d4d8]">
-                                    Coin per Hour
-                                </div>
-                                <div className="flex items-center">
-                                    <img src="/src/assets/hero/coin-upgrade.png" alt="" className="h-[2.8vh] " />
-                                    <div className="text-[white] font-bold text-[1.2rem]">+3.7k</div>
-                                </div>
-                            </div>
+                            <button className="bg-white w-[70vw] h-[7vh] text-[2rem] animate-shadowFadeInOut" onClick={handleNavigate}>
+                                Continue
+                            </button>
                         </div>
-                        <div className="flex items-center justify-between w-[34vw] mt-8 h-[7rem]">
-                            <div>
-
-                            <div className="text-[#d2d4d8]">
-                                Coin 
-                            </div>
-                            <div className="flex items-center">
-                                <img src="/src/assets/hero/coin.png" alt="" className="h-[2.8vh] " />
-                                <div className="text-[white] font-bold text-[1.2rem]">+3.7k</div>
-                            </div>
-                            </div>
-                            <div className="mb-4">
-                            <img src="/src/assets/hero/hamburger.png" alt="" className="h-[4vh] mt-[2rem]" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <img src="/src/assets/city/lock.png" alt=""  className="absolute h-[8.5vh] right-5 top-52 "/>
-                        <div className="text-white absolute right-10 top-[17.89rem] bg-[#6C6C6C] w-[20vw] flex items-center justify-center rounded-tl-lg rounded-br-lg text-[1.1rem]">Trade NFT</div>
-                    </div>
-                    <div>
-                        <img src="/src/assets/city/bull.png" alt=""  className="absolute left-10 h-[8.5vh] top-64 bg-[#2D2D2B] rounded-[3rem] border-[4px] border-white border-b-transparent"/>
-                        <div className="text-white absolute left-7 top-[20rem] bg-[#067FDC] w-[23.5vw] flex items-center justify-center rounded-tl-lg rounded-br-lg text-[1.1rem]">Investments</div>
-                    </div>
-                    <div>
-                        <img src="/src/assets/city/tede bear.png" alt=""  className="absolute h-[8.5vh] right-[7rem] top-[25.5rem] border-[4px] border-[#C5F4FF] rounded-[3rem] border-b-transparent "/>
-                        <div className="text-white absolute right-[5.8rem] top-[29.6rem] bg-[#067FDC] w-[28.5vw] flex items-center justify-center rounded-tl-lg rounded-br-lg text-[1.1rem]">Premium store</div>
-                    </div>
-                    <div>
-                        <img src="/src/assets/city/telegram.png" alt=""  className="absolute h-[8.5vh] right-14 top-[42.5rem] border-[4px] border-[#C5F4FF] rounded-[3rem] border-b-transparent "/>
-                        <div className="text-white absolute right-8 top-[46.5rem] bg-[#067FDC] w-[28.5vw] flex items-center justify-center rounded-tl-lg rounded-br-lg text-[1.1rem]">Communities</div>
-                    </div>
-                    <div>
-                        <img src="/src/assets/city/gift.png" alt=""  className=" bg-[#242422] absolute h-[8.5vh] left-[6rem] top-[40.5rem] border-[4px] border-[#C5F4FF] rounded-[3rem] border-b-transparent "/>
-                        <div className="text-white absolute left-[5.3rem] top-[44.5rem] bg-[#067FDC] w-[22.5vw] flex items-center justify-center rounded-tl-lg rounded-br-lg text-[1.1rem]">Lucky Box</div>
-                    </div>
-                    <div>
-                        <img src="/src/assets/city/signing.png" alt=""  className=" bg-[#242422] absolute h-[8.5vh] left-16 top-[30.5rem] border-[4px] border-[#C5F4FF] rounded-[3rem] border-b-transparent "/>
-                        <div className="text-white absolute left-[3.3rem] top-[34.5rem] bg-[#067FDC] w-[24.5vw] flex items-center justify-center rounded-tl-lg rounded-br-lg text-[1.1rem]">Hype Zone</div>
                     </div>
                 </div>
-                <footer className="  border-[#5074d2] h-[9vh] mt-[47rem] flex ">
-                    
+                {fallingStars.map(star => (
+                    <div
+                        key={star.id}
+                        className="absolute"
+                        style={{
+                            left: `${star.xPosition}px`,
+                            top: `${star.yPosition}px`,
 
-                        <button className="w-[20vw] flex items-center justify-center flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animate-upDown animation-delay-1000ms" onClick={handleImprove} >
-                            <img src="/src/assets/hero/fire.png" className="h-[4.5vh]" />
-                            <div className="text-[#B2BECE]">Improve</div>
-                        </button>
-                        <button className=" w-[20vw] flex items-center justify-center flex-col  rounded-[3rem] " onClick={handleCity}>
-                            <img src="/src/assets/hero/store (2).png" alt="" className="h-[7.5vh] bg-[#55F9E9] animate-shadowFadeInOut shadow-green-menu rounded-[3rem]" />
-                            <div className="text-[#B2BECE]">City</div>
-                        </button>
-                        
-                            <button className={`w-[20vw] flex items-center justify-center flex-col rounded-[3rem] bg-gradient-to-b from-[#1E1E1E] to-[#444343]  transition-all duration-300 ease-in-out animation-delay-300ms animate-upDown`}  onClick={handleMinning}>
-                                <img src="/src/assets/hero/mining.png" alt="" className={`h-[4.5vh]`} />
-                                <div className={`text-[#B2BECE]   ${highLight?"text-[white]":""}`}>Mining</div>
-                            </button>
-                            <button  className={` w-[20vw] flex items-center animate-upDown justify-center flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] `} onClick={handleFriends}>   
-                                <img src="/src/assets/hero/invite.png" alt="" className="h-[4.5vh]" />
-                                <div className="text-[#B2BECE]">Friends</div>
-                            </button>
-
-                            <button className="w-[20vw] flex items-center justify-center animate-upDown flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animation-delay-150ms " onClick={handleQuest}>
-                                <img src="/src/assets/hero/todo.png" alt="" className="h-[4.5vh]" />
-                                <div className="text-[#B2BECE]">Quests</div>
-                            </button>   
-                </footer>
+                        }}
+                    >
+                        <img src="/src/assets/city/drop game/star.webp" alt="star" className="h-[10vh]" onClick={()=>handleStarScore(star.id)}/>
+                    </div>
+                ))}
+                {fallingAsteroids.map(asteroid => (
+                    <div
+                        key={asteroid.id}
+                        className=" absolute"
+                        style={{
+                            left: `${asteroid.xPosition}px`,
+                            top: `${asteroid.yPosition}px`,
+                        }}
+                    >
+                        <img src="/src/assets/city/drop game/asteriod.webp" alt="asteroid" className="h-[10vh]" onClick={()=>handleAsteriodScore(asteroid.id)}/>
+                    </div>
+                ))}
             </div>
-        </>
-    )
-}
-export default City
+        </div>
+    );
+};
+
+export default City;

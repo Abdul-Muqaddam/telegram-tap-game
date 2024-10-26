@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
     font-family: 'Briller';
     src: local('Briller Black'), local('Briller-Black'),
         url('/src/assets/Briller-Black/Briller-Black.woff2') format('woff2'),
@@ -6,10 +6,10 @@
         url('/src/assets/Briller-Black/Briller-Black.ttf') format('truetype');
     font-weight: 900;
     font-style: normal;
-}
-
-.briller {
-    font-family: "Briller";
+} */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+.Orbitron {
+    font-family: "Orbitron";
 }
 
 .letter {
