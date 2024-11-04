@@ -7,11 +7,11 @@ const Friends = () => {
         if(location.pathname=="/friends"){
             setHightLight(true)
         }
-    },[location.pathname])
-    const handleImprove=()=>{
+    },[location.pathname]) 
+    const handleImprove=()=>{  hello 
         navigate("/improve")
     }
-    const handleCity=()=>{
+    const handleCity=()=>{ 
         navigate("/city")
     }
     const handleMinning=()=>{
@@ -57,7 +57,7 @@ const Friends = () => {
                                 </div>
                                 <div className="flex items-center">
                                     <img src="/src/assets/hero/coin.png" alt="" className="h-[2.8vh] " />
-                                    <div className="text-[white] font-bold text-[1.2rem]">+3.7k</div>
+                                    <div className="text-[white] font-bold text-[1.2rem]">{window.localStorage.getItem("score")/1000}k</div>
                                 </div>
                             </div>
                             <div className="mb-4">
@@ -130,4 +130,4 @@ const Friends = () => {
         </>
     )
 }
-export default Friends
+export default Friends 

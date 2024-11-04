@@ -58,7 +58,7 @@ const Quests = () => {
                                 </div>
                                 <div className="flex items-center">
                                     <img src="/src/assets/hero/coin.png" alt="" className="h-[2.8vh] " />
-                                    <div className="text-[white] text-[1.4rem] font-bold">+3.7k</div>
+                                    <div className="text-[white] text-[1.4rem] font-bold">{window.localStorage.getItem("score")/1000}k</div>
                                 </div>
                             </div>
                             <div className="mb-4">

@@ -1,73 +1,99 @@
-import React , { useState, useEffect }from "react";
+import { useGLTF, OrbitControls } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import React, { useState, useEffect, Suspense, useRef, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+// import { UserContext } from "./context/context";
+
+
+
+const Model = () => {
+    const modelRef=useRef()
+    const { scene } = useGLTF("./src/assets/texture of model and model/pluto.glb")
+    useFrame(()=>{
+        if(modelRef.current){
+            modelRef.current.rotation.y=modelRef.current.rotation.y+0.005;
+        }
+    })
+    return <primitive ref={modelRef} object={scene} position={[0, 0, 0]} scale={2.3}/>
+}
 
 const Hero = () => {
-    const [score,setScore]=useState(()=>{
-        let saveScore= window.localStorage.getItem("score")
-        return saveScore ? parseInt(saveScore,10) : 1
+    // const { score, setScore } = useContext(UserContext);
+    
+    const [score, setScore] = useState(() => {
+        let saveScore = window.localStorage.getItem("score")
+        return saveScore ? parseInt(saveScore, 10) : 1
     })
-    // const [tapme,setTapme]=useState("Tap Me")
-    const [enlarge,setEnlarge]=useState(false)
-    const [highLight,setHightLight]= useState(false)
-    const location=useLocation()
-    const navigate=useNavigate()    
-    useEffect(()=>{
+
+
+    const [tapme, setTapme] = useState("Tap Me")
+    const [enlarge, setEnlarge] = useState(false)
+    const [highLight, setHightLight] = useState(false)
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    useEffect(() => {
         const value = setInterval(() => {
-            setScore((prevalue)=>(prevalue +1))
-            
-         }, 1000);
-        return ()=>clearInterval(value)
-    },[])
-   
-    useEffect(()=>{
-        if(location.pathname=="/hero"){
+            setScore((prevalue) => (prevalue + 1))
+
+        }, 1000);
+        return () => clearInterval(value)
+    }, [])
+
+    useEffect(() => {
+        if (location.pathname == "/hero") {
             setHightLight(true)
         }
-    },[location.pathname])
-    useEffect(()=>{
-        window.localStorage.setItem("score",score)
-    },[score])
-      
-    const handleTapMe=()=>{
+    }, [location.pathname])
+    useEffect(() => {
+        window.localStorage.setItem("score", score)
+    }, [score])
+
+    const HandleTap = (event) => {
+
+    }
+
+
+    const handleTapMe = () => {
         setTapme("")
     }
-    
-    const handleIsEnlarge=()=>{
+
+    const handleIsEnlarge = () => {
         setEnlarge(true)
-        setTimeout(()=>{
+        setTimeout(() => {
             setEnlarge(false)
-        },500)
+        }, 500)
     }
-    const handleClickScore=()=>{
-        setScore((prevalue)=>(prevalue+9))
+    const handleClickScore = () => {
+        setScore((prevalue) => (prevalue + 9))
     }
-    const handleImprove=()=>{
+    const handleImprove = () => {
         navigate("/improve")
     }
-    const handleCity=()=>{
+    const handleCity = () => {
         navigate("/city")
     }
-    const handleMinning=()=>{
+    const handleMinning = () => {
         navigate("/hero")
     }
-    const handleFriends=()=>{
+    const handleFriends = () => {
         navigate("/friends")
     }
-    const  handleQuest=()=>{
+    const handleQuest = () => {
         navigate("/quests")
     }
 
 
     return (
         <>
+
             <div className="bg-custom-picture-hero absolute h-[100vh] w-[100vw] bg-cover">
                 <div className="flex justify-center">
                     <div className="h-[10vh] w-[90vw] flex items-center justify-between ">
                         <div className="flex items-center justify-between w-[45vw]">
                             <div className=" ">
                                 <div className="relative">
-                                    <img src="/src/assets/hero/logo.png" alt="" className="h-[7vh]  z-[0] mt-10 rounded-t-[0.6rem]" />
+                                    <img src="" alt="" className="h-[7vh]  z-[0] mt-10 rounded-t-[0.6rem]" />
                                     <div className="text-[white] font-bold text-[1.7rem] absolute bottom-[-10px] rounded-t-[2rem] left-[-2px]  ">Lv.1</div>
                                 </div>
                                 <div className="bg-[#424454] w-[18.116vw] h-[1rem] rounded-br-[0.6rem] rounded-bl-[0.6rem]">
@@ -92,35 +118,46 @@ const Hero = () => {
                 <div className="">
                     <img src="/src/assets/hero/coin.png" alt="" className="h-[7.9vh] absolute left-[5rem] top-[11rem] animate-upDown" />
                     <div className="text-white font-semibold text-[3rem] absolute left-[10.5rem] top-[11rem] Orbitron">{score}</div>
+
                 </div>
                 <div >
-                    <img  src="/src/assets/hero/elon_musk_full_body.png" alt="" className={`h-[47vh] absolute top-[18rem] transition-all duration-100 ease-in-out ${enlarge?"scale-110 custom-drop-shadow":""}`} onClick={()=>{handleTapMe(); handleIsEnlarge(); handleClickScore();}}/>
-                    <div className="text-white absolute left-[8rem] top-[30rem] font-bold text-[3rem] custome-text-shadow animate-upDown" onClick={handleTapMe} >{}</div>
+                    <div className={`h-[47vh] absolute z-10 top-[18rem] left-[3.5rem] transition-all duration-100 ease-in-out ${enlarge ? "scale-110 custom-drop-shadow" : ""}`} onClick={() => { handleTapMe(); handleIsEnlarge(); handleClickScore(); }}>
+                        <Canvas>
+                            <Suspense>
+                                <ambientLight intensity={1.5} /> {/* Soft global lighting */}
+                                <directionalLight position={[5, 5, 5]} intensity={1.5} /> {/* Sun-like light source */}
+                                <pointLight position={[-5, -5, -5]} intensity={1.5} /> {/* Localized point light */}
+                                <OrbitControls enableZoom={false} maxPolarAngle={Math.PI/2} minPolarAngle={Math.PI/2} />
+                                <Model />
+                            </Suspense>
+                        </Canvas>
+                    </div>
+                    <div className="text-white absolute left-[8rem] top-[30rem] font-bold text-[3rem] custome-text-shadow animate-upDown" onClick={handleTapMe} >{ }</div>
                 </div>
                 <footer className="  border-[#5074d2] h-[9vh] mt-[47rem] flex ">
-                    
 
-                        <button className="w-[20vw] flex items-center justify-center flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animate-upDown animation-delay-1000ms transition-all" onClick={handleImprove} >
-                            <img src="/src/assets/hero/fire.png" className="h-[4.5vh]" />
-                            <div className="text-[#B2BECE]">Improve</div>
-                        </button>
-                        <button className=" w-[20vw] flex items-center justify-center flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animate-upDown delay-400 animation-delay-600ms" onClick={handleCity}>
-                            <img src="/src/assets/hero/store.png" alt="" className="h-[4.5vh]" />
-                            <div className="text-[#B2BECE]">City</div>
-                        </button>
-                        
-                            <button className={`w-[20vw] flex items-center justify-center flex-col  rounded-[3rem] ${highLight?" transition-all duration-300 ease-in-out":""}` } onClick={handleMinning}>
-                                <img src="/src/assets/hero/elon_musk_half_body.png" alt="" className={`h-[7.5vh] left-[11.2rem] border-4 border-[#305084] bg-[#2F447A] rounded-[3rem] px-1 absolute bottom-[2rem] ${highLight?"border-[#55F9E9] bg-[#55F9E9] animate-shadowFadeInOut transition-all duration-300 ease-in-out":""} transition-all duration-300 ease-in-out`} />
-                                <div className={`text-[#B2BECE]  mt-10 ${highLight?"text-[white]":""}`}>Mining</div>
-                            </button>
-                            <button  className={` w-[20vw] flex items-center animate-upDown justify-center flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animation-delay-300ms`} onClick={handleFriends}>   
-                                <img src="/src/assets/hero/invite.png" alt="" className="h-[4.5vh]" />
-                                <div className="text-[#B2BECE]">Friends</div>
-                            </button>
-                            <button className="w-[20vw] flex items-center justify-center animate-upDown flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animation-delay-150ms " onClick={handleQuest}>
-                                <img src="/src/assets/hero/todo.png" alt="" className="h-[4.5vh]" />
-                                <div className="text-[#B2BECE]">Quests</div>
-                            </button>   
+
+                    <button className="w-[20vw] flex items-center justify-center flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animate-upDown animation-delay-1000ms transition-all" onClick={handleImprove} >
+                        <img src="/src/assets/hero/fire.png" className="h-[4.5vh]" />
+                        <div className="text-[#B2BECE]">Improve</div>
+                    </button>
+                    <button className=" w-[20vw] flex items-center justify-center flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animate-upDown delay-400 animation-delay-600ms" onClick={handleCity}>
+                        <img src="/src/assets/hero/store.png" alt="" className="h-[4.5vh]" />
+                        <div className="text-[#B2BECE]">City</div>
+                    </button>
+
+                    <button className={`w-[20vw] flex items-center justify-center flex-col  rounded-[3rem] ${highLight ? " transition-all duration-300 ease-in-out" : ""}`} onClick={handleMinning}>
+                        <div className={`h-[7.5vh] w-[15vw] left-[11.2rem] border-4 border-[#305084] bg-[#2F447A] rounded-[3rem] px-1 absolute bottom-[2rem] ${highLight ? "border-[#55F9E9] bg-[#55F9E9] animate-shadowFadeInOut transition-all duration-300 ease-in-out" : ""} transition-all duration-300 ease-in-out`} ></div>
+                        <div className={`text-[#B2BECE]  mt-10 ${highLight ? "text-[white]" : ""}`}>Mining</div>
+                    </button>
+                    <button className={` w-[20vw] flex items-center animate-upDown justify-center flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animation-delay-300ms`} onClick={handleFriends}>
+                        <img src="/src/assets/hero/invite.png" alt="" className="h-[4.5vh]" />
+                        <div className="text-[#B2BECE]">Friends</div>
+                    </button>
+                    <button className="w-[20vw] flex items-center justify-center animate-upDown flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animation-delay-150ms " onClick={handleQuest}>
+                        <img src="/src/assets/hero/todo.png" alt="" className="h-[4.5vh]" />
+                        <div className="text-[#B2BECE]">Quests</div>
+                    </button>
                 </footer>
             </div>
         </>

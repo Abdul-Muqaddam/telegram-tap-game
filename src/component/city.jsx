@@ -107,6 +107,10 @@ const City = () => {
     const navigate = useNavigate();
 
     const handleNavigate=()=>{
+
+        let newScore= Number(window.localStorage.getItem("score"));
+        newScore=newScore+score
+        window.localStorage.setItem("score",newScore);
         navigate("/hero")
     }
 

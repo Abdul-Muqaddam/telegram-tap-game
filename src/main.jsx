@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+import { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
@@ -9,6 +9,10 @@ import Improve from './component/improve.jsx'
 import City from './component/city.jsx'
 import Friends from './component/friends.jsx'
 import Quests from './component/quest.jsx'
+// import { UserProvider } from './component/context/context.jsx'
+
+
+
 const router=createBrowserRouter(
   [
     {
@@ -40,7 +44,9 @@ const router=createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   // <StrictMode>
+  // <UserProvider>
     <RouterProvider router={router}/>
+  // </UserProvider>
     // {/* <App /> */}
   // </StrictMode>,
 )

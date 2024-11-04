@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+// import { UserContext } from "./context/context";
 const Improve = () => {
+    // const [score]=useContext(UserContext)
     const navigate = useNavigate();
     const [highLight, setHighLight] = useState(false)
     useEffect(() => {
@@ -54,7 +56,7 @@ const Improve = () => {
                                 </div>
                                 <div className="flex items-center">
                                     <img src="/src/assets/hero/coin.png" alt="" className="h-[2.8vh] " />
-                                    <div className="text-[white] font-bold text-[1.2rem]">+3.7k</div>
+                                    <div className="text-[white] font-bold text-[1.2rem]">{window.localStorage.getItem("score")/1000}k</div>
                                 </div>
                             </div>
                             <div className="mb-4">
