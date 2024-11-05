@@ -1,6 +1,6 @@
 import { Telegraf, Markup } from "telegraf";
 
-const TOKEN = "7640388116:AAE_qnkxQF9o5TKHLy0mv-Ud58OdnLJFf6s";
+const TOKEN = "paste your own bot token";
 const website_link = "https://celadon-lebkuchen-38decd.netlify.app/";
 
 const bot = new Telegraf(TOKEN);
