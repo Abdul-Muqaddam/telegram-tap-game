@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const Model = () => {
     const modelRef=useRef()
-    const { scene } = useGLTF("./src/assets/texture of model and model/pluto.glb")
+    const { scene } = useGLTF("./texture of model and model/pluto.glb")
     useFrame(()=>{
         if(modelRef.current){
             modelRef.current.rotation.y=modelRef.current.rotation.y+0.005;
@@ -87,7 +87,7 @@ const Hero = () => {
     return (
         <>
 
-            <div className="bg-custom-picture-hero absolute h-[100vh] w-[100vw] bg-cover">
+            <div className="bg-custom-picture-hero  overflow-hidden h-[100vh] w-[100%]  bg-cover ">
                 <div className="flex justify-center">
                     <div className="h-[10vh] w-[90vw] flex items-center justify-between ">
                         <div className="flex items-center justify-between w-[45vw]">
@@ -105,57 +105,57 @@ const Hero = () => {
                                     Coin per Hour
                                 </div>
                                 <div className="flex items-center">
-                                    <img src="/src/assets/hero/coin-upgrade.png" alt="" className="h-[2.8vh] " />
+                                    <img src="/hero/coin-upgrade.png" alt="" className="h-[2.8vh] " />
                                     <div className="text-[white] font-bold text-[1.2rem]">+3.7k</div>
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <img src="/src/assets/hero/hamburger.png" alt="" className="h-[4vh] mt-[2rem]" />
+                            <img src="/hero/hamburger.png" alt="" className="h-[4vh] mt-[2rem]" />
                         </div>
                     </div>
                 </div>
                 <div className="">
-                    <img src="/src/assets/hero/coin.png" alt="" className="h-[7.9vh] absolute left-[5rem] top-[11rem] animate-upDown" />
-                    <div className="text-white font-semibold text-[3rem] absolute left-[10.5rem] top-[11rem] Orbitron">{score}</div>
+                    <img src="/hero/coin.png" alt="" className="h-[7.9vh] absolute left-[5rem] top-[7rem] animate-upDown" />
+                    <div className="text-white font-semibold text-[3rem] absolute left-[9rem] top-[6rem] Orbitron">{score}</div>
 
                 </div>
                 <div >
-                    <div className={`h-[47vh] absolute z-10 top-[18rem] left-[3.5rem] transition-all duration-100 ease-in-out ${enlarge ? "scale-110 custom-drop-shadow" : ""}`} onClick={() => { handleTapMe(); handleIsEnlarge(); handleClickScore(); }}>
+                    <div className={`h-[47vh] absolute z-10 top-[12rem] left-[3.5rem] transition-all duration-100 ease-in-out ${enlarge ? "scale-110 custom-drop-shadow" : ""}`} onClick={() => { handleTapMe(); handleIsEnlarge(); handleClickScore(); }}>
                         <Canvas>
                             <Suspense>
                                 <ambientLight intensity={1.5} /> {/* Soft global lighting */}
                                 <directionalLight position={[5, 5, 5]} intensity={1.5} /> {/* Sun-like light source */}
                                 <pointLight position={[-5, -5, -5]} intensity={1.5} /> {/* Localized point light */}
-                                <OrbitControls enableZoom={false} maxPolarAngle={Math.PI/2} minPolarAngle={Math.PI/2} />
+                                <OrbitControls enableZoom={false}  enablePan={false}  />
                                 <Model />
                             </Suspense>
                         </Canvas>
                     </div>
                     <div className="text-white absolute left-[8rem] top-[30rem] font-bold text-[3rem] custome-text-shadow animate-upDown" onClick={handleTapMe} >{ }</div>
                 </div>
-                <footer className="  border-[#5074d2] h-[9vh] mt-[47rem] flex ">
+                <footer className="  border-[#5074d2] h-[9vh] mt-[26.5rem] flex justify-around">
 
 
-                    <button className="w-[20vw] flex items-center justify-center flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animate-upDown animation-delay-1000ms transition-all" onClick={handleImprove} >
-                        <img src="/src/assets/hero/fire.png" className="h-[4.5vh]" />
+                    <button className="w-[18vw] h-[12vh] flex items-center justify-center flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animate-upDown animation-delay-1000ms transition-all" onClick={handleImprove} >
+                        <img src="/hero/fire.png" className="h-[4.5vh]" />
                         <div className="text-[#B2BECE]">Improve</div>
                     </button>
-                    <button className=" w-[20vw] flex items-center justify-center flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animate-upDown delay-400 animation-delay-600ms" onClick={handleCity}>
-                        <img src="/src/assets/hero/store.png" alt="" className="h-[4.5vh]" />
+                    <button className=" w-[18vw] h-[12vh] flex items-center justify-center flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animate-upDown delay-400 animation-delay-600ms" onClick={handleCity}>
+                        <img src="/hero/store.png" alt="" className="h-[4.5vh]" />
                         <div className="text-[#B2BECE]">City</div>
                     </button>
 
-                    <button className={`w-[20vw] flex items-center justify-center flex-col  rounded-[3rem] ${highLight ? " transition-all duration-300 ease-in-out" : ""}`} onClick={handleMinning}>
-                        <div className={`h-[7.5vh] w-[15vw] left-[11.2rem] border-4 border-[#305084] bg-[#2F447A] rounded-[3rem] px-1 absolute bottom-[2rem] ${highLight ? "border-[#55F9E9] bg-[#55F9E9] animate-shadowFadeInOut transition-all duration-300 ease-in-out" : ""} transition-all duration-300 ease-in-out`} ></div>
+                    <button className={`w-[18vw] h-[12vh] flex items-center justify-center flex-col  rounded-[3rem] ${highLight ? " transition-all duration-300 ease-in-out" : ""}`} onClick={handleMinning}>
+                        <div className={`h-[10.5vh] w-[15vw] left-[10.2rem] border-4 border-[#305084] bg-[#2F447A] rounded-[3rem] px-1 absolute bottom-[2.3rem]  ${highLight ? "border-[#55F9E9] bg-[#55F9E9] animate-shadowFadeInOut transition-all duration-300 ease-in-out" : ""} transition-all duration-300 ease-in-out`} ></div>
                         <div className={`text-[#B2BECE]  mt-10 ${highLight ? "text-[white]" : ""}`}>Mining</div>
                     </button>
-                    <button className={` w-[20vw] flex items-center animate-upDown justify-center flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animation-delay-300ms`} onClick={handleFriends}>
-                        <img src="/src/assets/hero/invite.png" alt="" className="h-[4.5vh]" />
+                    <button className={` w-[18vw] h-[12vh] flex items-center animate-upDown justify-center flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animation-delay-300ms`} onClick={handleFriends}>
+                        <img src="/hero/invite.png" alt="" className="h-[4.5vh]" />
                         <div className="text-[#B2BECE]">Friends</div>
                     </button>
-                    <button className="w-[20vw] flex items-center justify-center animate-upDown flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animation-delay-150ms " onClick={handleQuest}>
-                        <img src="/src/assets/hero/todo.png" alt="" className="h-[4.5vh]" />
+                    <button className="w-[18vw] h-[12vh] flex items-center justify-center animate-upDown flex-col bg-gradient-to-b from-[#1E1E1E] to-[#444343] rounded-[3rem] animation-delay-150ms " onClick={handleQuest}>
+                        <img src="/hero/todo.png" alt="" className="h-[4.5vh]" />
                         <div className="text-[#B2BECE]">Quests</div>
                     </button>
                 </footer>

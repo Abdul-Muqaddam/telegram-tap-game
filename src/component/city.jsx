@@ -131,7 +131,7 @@ const City = () => {
                             Your are on Fire
                             </div>
                             <div className="flex items-center justify-center">
-                                <img src="src/assets/hero/coin.png" alt="" className="h-[8vh] animate-upDown" />
+                                <img src="/hero/coin.png" alt="" className="h-[8vh] animate-upDown" />
                                 <div className="text-white text-[3rem] font-bold">
                                     {score}
                                 </div>
@@ -152,7 +152,7 @@ const City = () => {
 
                         }}
                     >
-                        <img src="/src/assets/city/drop game/star.webp" alt="star" className="h-[10vh]" onClick={()=>handleStarScore(star.id)}/>
+                        <img src="/city/drop game/star.webp" alt="star" className="h-[16vh]" onClick={()=>handleStarScore(star.id)}/>
                     </div>
                 ))}
                 {fallingAsteroids.map(asteroid => (
@@ -164,7 +164,7 @@ const City = () => {
                             top: `${asteroid.yPosition}px`,
                         }}
                     >
-                        <img src="/src/assets/city/drop game/asteriod.webp" alt="asteroid" className="h-[10vh]" onClick={()=>handleAsteriodScore(asteroid.id)}/>
+                        <img src="/city/drop game/asteriod.webp" alt="asteroid" className="h-[16vh]" onClick={()=>handleAsteriodScore(asteroid.id)}/>
                     </div>
                 ))}
             </div>
